@@ -10,14 +10,14 @@ const personApi = {
     try {
       const response = await publicClient.get(personEndpoints.detail({ personId }));
 
-      return { response };
+      return  response ;
     } catch (err) { return { err }; }
   },
   medias: async ({ personId }) => {
     try {
       const response = await publicClient.get(personEndpoints.medias({ personId }));
 
-      return { response };
+      return  response ;
     } catch (err) { return { err }; }
   }
 };

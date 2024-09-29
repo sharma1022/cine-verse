@@ -4,33 +4,35 @@ import responseHandler from "../handlers/response.handler.js";
 
 const signup = async (req, res) => {
   try {
-    const { username, password, displayName } = req.body;
+    const { username, password, displayName, confirmPassword } = req.body;
+
+    console.log(req.body); // Log the incoming request data
+
+    // Validate password and confirmPassword match
+    if (password !== confirmPassword) {
+      return responseHandler.badrequest(res, "Passwords do not match");
+    }
 
     const checkUser = await userModel.findOne({ username });
+  console.log("Check user result:", checkUser); 
+    if (checkUser) return responseHandler.badrequest(res, "Username already used");
 
-    if (checkUser) return responseHandler.badrequest(res, "username already used");
-
-    const user = new userModel();
-
-    user.displayName = displayName;
-    user.username = username;
+    // Create a new user
+    const user = new userModel({ username, displayName });
     user.setPassword(password);
 
     await user.save();
 
-    const token = jsonwebtoken.sign(
-      { data: user.id },
-      process.env.TOKEN_SECRET,
-      { expiresIn: "24h" }
-    );
+    const token = jsonwebtoken.sign({ data: user.id }, process.env.TOKEN_SECRET, { expiresIn: "24h" });
 
     responseHandler.created(res, {
       token,
       ...user._doc,
       id: user.id
     });
-  } catch {
-    responseHandler.error(res);
+  } catch (error) {
+    console.error("Error in signup:", error); // Log the error
+    responseHandler.error(res, error.message); // Send error response with details
   }
 };
 
