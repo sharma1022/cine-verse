@@ -2,12 +2,12 @@ const responseWithData = (res, statusCode, data) => res.status(statusCode).json(
 
 const error = (res) => responseWithData(res, 500, {
   status: 500,
-  message: "Oops! Something worng!"
+  message: "Oops! Something went wrong!"
 });
 
 const badrequest = (res, message) => responseWithData(res, 400, {
   status: 400,
-  message
+  message : "Bad Request"
 });
 
 const ok = (res, data) => responseWithData(res, 200, data);

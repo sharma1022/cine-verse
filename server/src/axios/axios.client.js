@@ -1,8 +1,13 @@
-import axios from "axios"
+import axios from "axios";
 
-const get = async () => {
-    const res = await axios.get(url);
-    return res.data;
-}
+const get = async (url) => {
+  const response = await axios.get(url, {
+    headers: {
+      Accept: "application/json",
+      "Accept-Encoding": "identity"
+    }
+  });
+  return response.data;
+};
 
 export default { get };
