@@ -1,4 +1,3 @@
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import {
   Box,
   Button,
@@ -229,12 +228,11 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                   <Button
                     variant="contained"
                     size="large"
-                    startIcon={<PlayArrowIcon />}
                     component={Link}
                     to={routesGen.mediaDetail(mediaType, movie.id)}
                     sx={{ width: "max-content" }}
                   >
-                    trailer
+                    details
                   </Button>
                   {/* buttons */}
                 </Stack>
