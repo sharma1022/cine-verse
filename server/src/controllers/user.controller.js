@@ -14,12 +14,13 @@ const signup = async (req, res) => {
     }
 
     const checkUser = await userModel.findOne({ username });
-  console.log("Check user result:", checkUser); 
+    console.log("Check user result:", checkUser); 
+
     if (checkUser) return responseHandler.badrequest(res, "Username already used");
 
     // Create a new user
     const user = new userModel({ username, displayName });
-    user.setPassword(password);
+    user.setPassword(password); // Ensure password is hashed
 
     await user.save();
 
@@ -32,7 +33,7 @@ const signup = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in signup:", error); // Log the error
-    responseHandler.error(res, error.message); // Send error response with details
+    responseHandler.error(res, "Internal Server Error"); // Send generic error message for security
   }
 };
 
@@ -42,7 +43,7 @@ const signin = async (req, res) => {
 
     const user = await userModel.findOne({ username }).select("username password salt id displayName");
 
-    if (!user) return responseHandler.badrequest(res, "User not exist");
+    if (!user) return responseHandler.badrequest(res, "User does not exist");
 
     if (!user.validPassword(password)) return responseHandler.badrequest(res, "Wrong password");
 
@@ -52,6 +53,7 @@ const signin = async (req, res) => {
       { expiresIn: "24h" }
     );
 
+    // Optionally clear sensitive data before sending the response
     user.password = undefined;
     user.salt = undefined;
 
@@ -60,8 +62,9 @@ const signin = async (req, res) => {
       ...user._doc,
       id: user.id
     });
-  } catch {
-    responseHandler.error(res);
+  } catch (error) {
+    console.error("Error in signin:", error); // Log the error
+    responseHandler.error(res, "Internal Server Error"); // Send generic error message for security
   }
 };
 
