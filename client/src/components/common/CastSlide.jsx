@@ -35,17 +35,30 @@ const CastSlide = ({ casts }) => {
               >
                 <Box
                   sx={{
-                    position: "absolute",
+                    height: "100%",
                     width: "100%",
-                    height: "max-content",
-                    bottom: 0,
-                    padding: "10px",
-                    backgroundColor: "rgba(0,0,0,0.6)",
+                    "&:hover": { backgroundColor: "rgba(0,0,0,0.6)" },
                   }}
                 >
-                  <Typography sx={{ ...uiConfigs.style.typoLines(1, "left") }}>
-                    {cast.name}
-                  </Typography>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "max-content",
+                      bottom: 0,
+                      padding: "10px",
+                      backgroundColor: "rgba(0,0,0,0.6)",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        ...uiConfigs.style.typoLines(1, "left"),
+                        color: "primary.contrastText",
+                      }}
+                    >
+                      {cast.name}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
             </Link>

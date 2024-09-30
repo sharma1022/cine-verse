@@ -38,6 +38,7 @@ const AutoSwiper = ({ children }) => {
           width: "100%",
           height: "max-content",
           "--swiper-theme-color": "#ff0000",
+          padding: "16px 0",
         }}
         navigation={!isMobile}
         loop={true}

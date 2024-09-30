@@ -243,7 +243,7 @@ const MediaDetail = () => {
                     startIcon={<PlayArrowIcon />}
                     onClick={() => videoRef.current.scrollIntoView()}
                   >
-                    watch now
+                    trailer
                   </Button>
                 </Stack>
                 {/* buttons */}

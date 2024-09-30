@@ -56,6 +56,7 @@ const MediaItem = ({ media, mediaType }) => {
           "&:hover .media-info": { opacity: 1, bottom: 0 },
           "&:hover .media-back-drop, &:hover .media-play-btn": { opacity: 1 },
           color: "primary.contrastText",
+          "&:hover": { scale: "1.025" },
         }}
       >
         {/* movie or tv item */}

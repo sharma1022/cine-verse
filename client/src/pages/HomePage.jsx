@@ -15,6 +15,20 @@ const HomePage = () => {
       />
 
       <Box marginTop="-4rem" sx={{ ...uiConfigs.style.mainContent }}>
+        <Container header="now playing">
+          <MediaSlide
+            mediaType={tmdbConfigs.mediaType.movie}
+            mediaCategory={tmdbConfigs.mediaCategory.now_playing}
+          />
+        </Container>
+
+        <Container header="upcoming movies">
+          <MediaSlide
+            mediaType={tmdbConfigs.mediaType.movie}
+            mediaCategory={tmdbConfigs.mediaCategory.upcoming}
+          />
+        </Container>
+
         <Container header="popular movies">
           <MediaSlide
             mediaType={tmdbConfigs.mediaType.movie}
