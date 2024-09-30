@@ -8,25 +8,45 @@ import routes from "./src/routes/index.js";
 
 const app = express();
 
+// Middleware Setup
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// API Routes
 app.use("/api/v1", routes);
 
+// Set the port
 const port = process.env.PORT || 5000;
 
-const server = http.createServer(app);
+// MongoDB Connection Function
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log("MongoDB connected successfully");
+    } catch (error) {
+        console.error("MongoDB connection error:", error);
+        throw new Error("Database connection failed"); // Propagate error
+    }
+};
 
-mongoose.connect(process.env.MONGODB_URL).then(() => {
-  console.log("Mongodb connected");
-  server.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-  });
-}).catch((err) => {
-  console.log({ err });
-  process.exit(1);
-});
+// Start the server and connect to MongoDB
+const startServer = async () => {
+    try {
+        await connectDB(); // Ensure the database is connected before starting the server
+        const server = http.createServer(app);
+        server.listen(port, () => {
+            console.log(`Server is listening on port ${port}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1); // Exit the process on failure
+    }
+};
 
-//test
+// Start the application
+startServer();
