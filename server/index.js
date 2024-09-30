@@ -16,7 +16,9 @@ app.use(cookieParser());
 
 // API Routes
 app.use("/api/v1", routes);
-
+app.get("/",(req,res)=> {
+    res.send("Welcome to API");
+})
 // Set the port
 const port = process.env.PORT || 5000;
 
