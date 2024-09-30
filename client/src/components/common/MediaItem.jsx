@@ -1,4 +1,3 @@
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
