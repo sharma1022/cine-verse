@@ -34,6 +34,19 @@ console.log(response);
 
       return { response };
     } catch (err) { return { err }; }
+  },
+  getMediaIdFromTmdb: async(tmdbId) => {
+    const tmdbResponse = await fetch(`https://api.themoviedb.org/3/movie/${tmdbId}?api_key=YOUR_TMDB_API_KEY`);
+  const tmdbData = await tmdbResponse.json();
+  const title = tmdbData.original_title;
+
+  // Step 2: Search for the media in DTDD
+  const dtddResponse = await fetch(`https://www.doesthedogdie.com/dddsearch?q=${encodeURIComponent(title)}`);
+  const dtddData = await dtddResponse.json();
+
+  // Extract media ID
+  const mediaId = dtddData.results[0].id; // Assuming it returns results
+  return mediaId;
   }
 };
 
